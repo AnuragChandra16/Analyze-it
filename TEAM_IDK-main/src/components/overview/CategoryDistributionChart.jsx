@@ -69,7 +69,7 @@ const CategoryDistributionChart = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:3000/category_data");
+                const response = await fetch("https://analyze-it-1.onrender.com/category_data");
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
