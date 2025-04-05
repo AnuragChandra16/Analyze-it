@@ -331,12 +331,7 @@ def transaction_data():
 
 # print(data)
 
-data = pd.read_pickle("C://Users//anura//Desktop//WEBDEVELOPMENT//simren//invoice_data (1).pkl")
-print(type(data))  # should be dict or list
 
-# If it's a list of dicts
-df = pd.DataFrame(data)
-print(df.head())
 
 if __name__ == "__main__":
     app.run(debug=True, port=3000)
