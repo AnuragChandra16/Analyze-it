@@ -186,12 +186,139 @@
 // });
 
 
+// require("dotenv").config();
+// const express = require("express");
+// const mongoose = require("mongoose");
+// const cors = require("cors");
+// const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+// const userRouter = require("./routes/userroute");
+
+// // Create Express app
+// const app = express();
+
+// // CORS options
+// const corsOptions = {
+//     origin: ['https://analyze-it-nine.vercel.app', 'http://localhost:5173'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true,
+//     optionsSuccessStatus: 204
+// };
+
+// // Use CORS middleware
+// app.use(cors(corsOptions));
+// app.use(express.json());
+
+// // Check if API key exists
+// if (!process.env.GEMINI_API_KEY) {
+//     console.error("❌ GEMINI_API_KEY not found in environment variables");
+//     process.exit(1);
+// }
+
+// // Initialize Google Generative AI with API key
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// // Connect to MongoDB with proper error handling
+// mongoose.connect("mongodb+srv://anuragchandra1601:KU2m4pQOjKOyUWlA@cluster0.yrg3o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+// .then(() => console.log("✅ Connected to MongoDB"))
+// .catch((err) => {
+//     console.error("❌ MongoDB connection failed:", err.message);
+//     process.exit(1); // Exit the process if DB connection fails
+// });
+
+// // Routes
+// app.use("/api/users", userRouter);
+
+// // Root route
+// app.get("/", (req, res) => {
+//     res.json({
+//         message: "Server is running",
+//         endpoints: {
+//             root: "GET /",
+//             generate: "POST /generate"
+//         }
+//     });
+// });
+
+// // Add route to list available models
+// app.get("/models", async (req, res) => {
+//     try {
+//         const models = await genAI.listModels();
+//         res.json({ models });
+//     } catch (error) {
+//         console.error("❌ Error listing models:", error);
+//         res.status(500).json({
+//             error: "Failed to list models",
+//             message: error.message
+//         });
+//     }
+// });
+
+// // Generate content route
+// app.post("/generate", async (req, res) => {
+//     const { prompt } = req.body;
+    
+//     if (!prompt) {
+//         return res.status(400).json({
+//             error: "Missing prompt",
+//             message: "Please provide a prompt in the request body"
+//         });
+//     }
+    
+//     try {
+//         // Updated model name to gemini-1.5-pro
+//         const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+        
+//         const result = await model.generateContent(prompt);
+//         const response = await result.response;
+//         const text = response.text();
+        
+//         res.json({
+//             success: true,
+//             result: text 
+//         });
+//     } catch (error) {
+//         console.error("❌ Error generating content:", error);
+//         res.status(500).json({
+//             error: "Failed to generate content",
+//             message: error.message
+//         });
+//     }
+// });
+
+// // Handle 404s
+// app.use((req, res) => {
+//     res.status(404).json({
+//         error: "Not Found",
+//         message: "The requested URL was not found on this server.",
+//         path: req.path
+//     });
+// });
+
+// // Error handling middleware
+// app.use((err, req, res, next) => {
+//     console.error(err.stack);
+//     res.status(500).json({
+//         error: "Something went wrong!",
+//         message: err.message
+//     });
+// });
+
+// // Start Server
+// const PORT = process.env.PORT || 9000;
+// app.listen(PORT, () => {
+//     console.log(`🚀 Server is running on port ${PORT}`);
+//     console.log(`🌍 Test the server at http://localhost:${PORT}`);
+// });
+
+
+
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-
 const userRouter = require("./routes/userroute");
 
 // Create Express app
@@ -208,6 +335,19 @@ const corsOptions = {
 
 // Use CORS middleware
 app.use(cors(corsOptions));
+
+// Enable preflight requests for all routes
+app.options('*', cors(corsOptions));
+
+// Add direct CORS headers as fallback
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://analyze-it-nine.vercel.app');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 app.use(express.json());
 
 // Check if API key exists
