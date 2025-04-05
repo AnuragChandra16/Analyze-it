@@ -160,7 +160,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:5173")
+CORS(app, origins="https://analyze-it-nine.vercel.app/")
 
 @app.route("/sales_data", methods=["GET"])
 def get_sales_data():
