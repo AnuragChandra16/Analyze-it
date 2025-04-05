@@ -167,7 +167,7 @@ import {
   
     // Fetch transaction data from backend
     useEffect(() => {
-      fetch("http://localhost:3000/transaction_data")
+      fetch("https://analyze-it-1.onrender.com/transaction_data")
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch transactions");
           return res.json();
