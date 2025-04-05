@@ -157,7 +157,7 @@ const AIPoweredInsights = () => {
     const requestBody = { prompt: prompt };
     console.log("Request body:", requestBody);
 
-    const response = await fetch("http://localhost:9000/generate", {
+    const response = await fetch("https://analyze-it-yaq4.onrender.com/generate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
