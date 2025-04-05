@@ -312,7 +312,7 @@ const OrdersPage = () => {
 
   // Fetch transaction data from backend
   useEffect(() => {
-    fetch("http://localhost:3000/transaction_data")
+    fetch("https://analyze-it-1.onrender.com/transaction_data")
       .then((res) => res.json())
       .then((data) => setTransactions(data))
       .catch((err) => console.error("Error fetching transactions:", err));
