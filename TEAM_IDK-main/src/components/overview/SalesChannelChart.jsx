@@ -10,7 +10,7 @@ const SalesOverviewChart = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://127.0.0.1:3000/sales_data");
+                const response = await fetch("https://analyze-it-1.onrender.com/sales_data");
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
