@@ -160,7 +160,13 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins="https://analyze-it-nine.vercel.app")
+# CORS(app, origins="https://analyze-it-nine.vercel.app")
+
+CORS(app, resources={r"/*": {
+    "origins": ["https://analyze-it-nine.vercel.app"],
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "allow_headers": ["Content-Type", "Authorization"]
+}})
 
 @app.route("/sales_data", methods=["GET"])
 def get_sales_data():
