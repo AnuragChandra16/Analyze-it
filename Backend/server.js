@@ -199,7 +199,7 @@ const app = express();
 
 // CORS options
 const corsOptions = {
-    origin: ['https://analyze-it-nine.vercel.app/','http://localhost:5173','*'],  // Allow frontend
+    origin: ['https://analyze-it-nine.vercel.app', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
